@@ -55,6 +55,8 @@ Tests run on in-memory SQLite — no Docker, no Postgres required.
 backend/          FastAPI app (api/ core/ models/ schemas/ services/ db/) + tests/
 frontend/         Next.js App Router (app/ components/ lib/)
 scripts/          dev / start / stop / test wrappers
+.claude/skills/   agent skills (cerebras, legal-template-drafting)
+catalog.json      available document types (id, name, fields)
 docker-compose.yml
 Claude.md         project "law": architecture, standards, and status log
 ```
@@ -62,12 +64,16 @@ Claude.md         project "law": architecture, standards, and status log
 ## Configuration
 
 Copy `.env.example` to `.env` and adjust as needed. Secrets are never committed
-(`.env` is gitignored).
+(`.env` is gitignored). The document types the chat can draft live in
+`catalog.json` at the project root.
 
-> **Note on the AI:** this build ships **without** a live LLM. `ANTHROPIC_API_KEY`
-> is intentionally empty — the chat runs on a deterministic mock
-> (`backend/app/services/chat.py`). The API response is already shaped as
-> structured output, so swapping in a real model later needs no contract change.
+> **Note on the AI:** this build ships **without** a live LLM — the chat runs on
+> a deterministic mock (`backend/app/services/chat.py`) so it works with no key.
+> The intended path for real calls is the `cerebras` skill
+> (`.claude/skills/cerebras/`): LiteLLM → OpenRouter → Cerebras
+> (`openai/gpt-oss-120b`), one non-streaming structured-output call. The mock
+> already mirrors that response shape, so enabling a live model is just setting
+> `OPENROUTER_API_KEY` — no contract change.
 
 ## Status
 
