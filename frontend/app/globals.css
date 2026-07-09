@@ -1,0 +1,43 @@
+:root {
+  --disclaimer-bg: #fff8e1;
+  --disclaimer-border: #f0c000;
+  --disclaimer-text: #6b5900;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1a1a1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Legal disclaimer banner (issue #7): visible, high-contrast, above content. */
+.disclaimer-banner {
+  background: var(--disclaimer-bg);
+  border-bottom: 2px solid var(--disclaimer-border);
+  color: var(--disclaimer-text);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+  padding: 2rem 1.25rem;
+}
+
+/* Compact recurring reminder in the footer (issue #7). */
+.disclaimer-footer {
+  border-top: 1px solid #e5e5e5;
+  color: #767676;
+  padding: 1rem 1.25rem;
+  font-size: 0.8rem;
+  text-align: center;
+}
