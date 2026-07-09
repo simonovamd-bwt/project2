@@ -1,13 +1,28 @@
-FROM python:3.11-slim
+# Pre-legal — FastAPI serving both the JSON API and the built Next.js frontend.
+#
+# Stage 1: build the Next.js static export (output: "export").
+FROM node:20-slim AS frontend-build
+
+WORKDIR /frontend
+
+COPY frontend/package.json frontend/package-lock.json* ./
+RUN npm ci
+
+COPY frontend/ ./
+RUN npm run build
+
+# Stage 2: the FastAPI app, with the built frontend copied in as static files.
+FROM python:3.11-slim AS backend
 
 RUN pip install --no-cache-dir uv
 
-WORKDIR /app
+WORKDIR /app/backend
 
-COPY pyproject.toml ./
+COPY backend/pyproject.toml ./
 RUN uv sync --no-dev
 
-COPY app ./app
+COPY backend/app ./app
+COPY --from=frontend-build /frontend/out /app/frontend/out
 
 EXPOSE 8000
 

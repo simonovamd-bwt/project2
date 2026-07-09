@@ -10,7 +10,7 @@
 - **Бекенд:** FastAPI (Python), проект під `uv`
 - **Фронтенд:** Next.js (App Router)
 - **База даних:** SQLite (файлова, для v1; шлях до Postgres лишаємо відкритим на майбутнє, але не реалізуємо завчасно)
-- **Розгортання:** Docker (окремі образи для backend/frontend, docker-compose для локальної розробки)
+- **Розгортання:** Docker, єдиний образ (`backend/Dockerfile`, multistage: Next.js static export → FastAPI віддає його як static files), `docker-compose.yml` піднімає один сервіс `app` на порту 8000
 
 ## 2. Технічний дизайн (v1 — фундамент)
 
@@ -37,13 +37,17 @@
 │       ├── unit/
 │       └── integration/
 └── frontend/
-    ├── package.json
-    ├── Dockerfile
+    ├── package.json      # Next.js, output: "export" у next.config.mjs
     ├── app/
     ├── components/
     ├── lib/
     └── public/
 ```
+
+Немає окремого `frontend/Dockerfile` — фронтенд збирається як перший стейдж
+`backend/Dockerfile` (`next build` → статичні файли в `frontend/out/`), а
+FastAPI сам віддає їх (`app/main.py::_mount_frontend`, SPA-fallback на
+`index.html` для будь-якого шляху, що не починається з `api/`).
 
 ### 2.2 Стандарти коду
 
