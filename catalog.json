@@ -1,0 +1,37 @@
+{
+  "source": "Common Paper (https://commonpaper.com)",
+  "license": "CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)",
+  "description": "Available document types the user can draft via the chat interface. Each entry maps to a template the assistant fills in through a guided conversation.",
+  "templates": [
+    {
+      "id": "mutual_nda",
+      "name": "Mutual Non-Disclosure Agreement",
+      "description": "Two-way NDA where both parties share and protect confidential information.",
+      "fields": ["disclosing_party", "receiving_party", "purpose", "term_months"]
+    },
+    {
+      "id": "cloud_service_agreement",
+      "name": "Cloud Service Agreement",
+      "description": "Terms under which a provider offers a cloud/SaaS service to a customer.",
+      "fields": ["provider", "customer", "service_description", "start_date", "term_months", "governing_state"]
+    },
+    {
+      "id": "professional_services_agreement",
+      "name": "Professional Services Agreement",
+      "description": "Engagement for professional/consulting services with defined scope and fees.",
+      "fields": ["provider", "client", "services", "fees", "payment_terms", "term_months"]
+    },
+    {
+      "id": "pilot_agreement",
+      "name": "Pilot Agreement",
+      "description": "Short-term trial of a product or service before a full commitment.",
+      "fields": ["provider", "customer", "pilot_purpose", "pilot_length_days", "liability_cap", "effective_date"]
+    },
+    {
+      "id": "data_processing_agreement",
+      "name": "Data Processing Agreement",
+      "description": "Governs how a processor handles personal data on behalf of a controller.",
+      "fields": ["controller", "processor", "data_categories", "processing_purpose", "term_months"]
+    }
+  ]
+}
