@@ -1,20 +1,19 @@
 """Shared pytest fixtures.
 
-Tests run against a temporary file-based SQLite database (not ``:memory:``,
-which would give each pooled connection its own separate database since our
-routes run sync in FastAPI's threadpool). The env var must be set before any
-``app`` import so the engine binds to it.
+Tests run against an in-memory SQLite database, so they need no disk file,
+no Docker, and no Postgres. ``_make_engine`` uses ``StaticPool`` for in-memory
+URLs, which shares one connection across threads — required because our sync
+routes run in FastAPI's threadpool and would otherwise each see a separate
+empty database. The env var is set before any ``app`` import so the engine
+binds to it.
 """
 
 import os
-import tempfile
 
-import pytest
-from fastapi.testclient import TestClient
+os.environ["DATABASE_URL"] = "sqlite://"
 
-_db_fd, _db_path = tempfile.mkstemp(suffix=".db")
-os.close(_db_fd)
-os.environ["DATABASE_URL"] = f"sqlite:///{_db_path}"
+import pytest  # noqa: E402
+from fastapi.testclient import TestClient  # noqa: E402
 
 from app.db.session import Base, engine  # noqa: E402
 from app.main import app  # noqa: E402
