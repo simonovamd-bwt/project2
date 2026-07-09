@@ -3,10 +3,14 @@
 # Stage 1: build the Next.js static export (output: "export").
 FROM node:20-slim AS frontend-build
 
+# Anonymous telemetry would make a network call during `next build`; disable it
+# so the build never depends on reaching nextjs.org.
+ENV NEXT_TELEMETRY_DISABLED=1
+
 WORKDIR /frontend
 
 COPY frontend/package.json frontend/package-lock.json* ./
-RUN npm ci
+RUN npm ci --no-audit --no-fund
 
 COPY frontend/ ./
 RUN npm run build
