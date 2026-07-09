@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, JSONResponse
 
-from app.api import auth, documents
+from app.api import auth, chat, documents
 from app.core.config import settings
 from app.db.session import Base, engine
 
@@ -19,6 +19,7 @@ app = FastAPI(title="Pre-legal API", version="0.1.0", lifespan=lifespan)
 
 app.include_router(auth.router)
 app.include_router(documents.router)
+app.include_router(chat.router)
 
 
 @app.get("/health")
