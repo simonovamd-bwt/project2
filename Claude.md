@@ -108,6 +108,7 @@ OpenRouter → Cerebras** як inference-провайдер, модель
 | 2026-07-10 | #8 | SaaS UI polish: дизайн-токени (`:root`), градієнт/тіні, брендований header, auth-екран (Sign In/Up), картки історії; акцент королівський синій #2563eb | #18 |
 | 2026-07-10 | #1 | Базова інфраструктура (PL4): інфраструктурні критерії виконано/перевиконано (auth — реальний замість placeholder). Статична NDA-форма свідомо мігрувала у #2 (чат) + #8 (UI) — закрито з обґрунтуванням | — (закрито коментарем) |
 | 2026-07-10 | #2 | ШІ чат-інтерфейс на **моках** (без LLM): `services/chat.py` — детермінований діалог (4 запитання) + structured output; `POST /api/chat` (public, stateless); фронтенд `ChatInterface` з live-preview і Download PDF (`window.print`) | #19 |
+| 2026-07-10 | — | Пост-фінал (документація + урок 60): додано `README.md` та опис репо на GitHub; **скіл `cerebras`** (LiteLLM → OpenRouter → Cerebras, gpt-oss-120b, structured output), **`catalog.json`** (типи документів) + `@catalog.json` інклюд у Claude.md, `OPENROUTER_API_KEY` у `.env.example` — закрито розрив із уроком 60 | #20 |
 
 ### ШІ чат-інтерфейс — мок-реалізація (#2)
 
