@@ -23,3 +23,18 @@ def test_new_session_token_is_unique_and_url_safe():
     tokens = {new_session_token() for _ in range(100)}
     assert len(tokens) == 100
     assert all(t.isascii() and " " not in t for t in tokens)
+
+
+def test_hash_password_is_salted_so_same_input_differs():
+    # A random salt per call means two hashes of the same password differ,
+    # yet both verify. Guards against an accidental switch to unsalted hashing.
+    a = hash_password("secret1")
+    b = hash_password("secret1")
+    assert a != b
+    assert verify_password("secret1", a)
+    assert verify_password("secret1", b)
+
+
+def test_verify_password_rejects_empty_password():
+    hashed = hash_password("secret1")
+    assert verify_password("", hashed) is False
