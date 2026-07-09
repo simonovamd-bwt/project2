@@ -27,3 +27,6 @@ npm-debug.log*
 # IDE
 .vscode/
 .idea/
+
+# Colleague's repo, cloned locally for reference/comparison — not part of this repo
+colleague_prelegal/
