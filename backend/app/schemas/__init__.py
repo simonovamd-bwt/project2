@@ -36,3 +36,28 @@ class DocumentSummary(BaseModel):
 class DocumentOut(DocumentSummary):
     form_values: dict
     markdown: str
+
+
+class ChatRequest(BaseModel):
+    """The answers collected so far. The frontend re-sends the full map each
+    turn (stateless), and the mock service replies with the next question."""
+
+    answers: dict[str, str] = Field(default_factory=dict)
+
+
+class ChatResponse(BaseModel):
+    """A single structured turn: chat text + extracted fields + live preview.
+
+    Mirrors the shape a real non-streaming structured-output model would
+    return, so no code changes when a live LLM eventually replaces the mock.
+    """
+
+    reply: str
+    next_field: str | None
+    complete: bool
+    fields: dict[str, str]
+    document_type: str
+    title: str
+    markdown: str
+    total_questions: int
+    answered: int
